@@ -42,7 +42,6 @@ class Person(db.Model):
     username = db.Column(db.String(128), unique=True)
     land = db.Column(db.String(128))
     phone = db.Column(db.String(128))
-    image_url = db.Column(db.String(256))
 
 
 def seed_data():
@@ -61,7 +60,6 @@ def seed_data():
         db.session.commit()
 
     faker = Faker()
-    faker.add_provider(person)
 
     while Person.query.count() < 100:
         new_name = faker.name()
@@ -69,11 +67,10 @@ def seed_data():
         new_email = faker.email()
         new_country = faker.country()
         new_username = faker.user_name()
-        fake_image_url = faker.image_url(width=200, height=200)  
         new_phone = str(random.randint(10000000, 99999999))
 
         new_user = Person(name=new_name, age=new_age, email=new_email, username=new_username, phone=new_phone,
-                          land=new_country, image_url=fake_image_url)
+                          land=new_country)
         db.session.add(new_user)
         db.session.commit()
 
